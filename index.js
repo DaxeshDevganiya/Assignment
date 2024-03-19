@@ -7,6 +7,8 @@ app.use(express.json());
 app.use(express.urlencoded());
 const cors= require("cors")
 const ejs= require('ejs');
+const kafka = require('kafka-node');
+const geolib = require('geolib');
 const multer = require('multer');
 const verifyToken=require("./middleware/authmiddleware");
 const verifyUser=require("./middleware/showAss");
@@ -30,7 +32,7 @@ app.use(cors({ origin: true }));
 app.set('view engine','ejs');
 
 app.listen(3000, (req,res)=>{
-    console.log("App is listening at port no 4000")
+    console.log("App is listening at port no 3000")
    
 })
 const storage = multer.diskStorage({
@@ -57,16 +59,22 @@ const loadReqAssignments=require("./controllers/loadReqAssignment")
 const webReqAssignments=require("./controllers/web/WebReqAss");
 const sendAssSolvereq=require("./controllers/getAssignmentReqbySolver");
 const deleteAssignment=require("./controllers/studDeleteAssignment");
-
+const EmailChecker=require("./controllers/checkEmail");
+const passwordChecker=require("./controllers/checkPassword");
+const optChecker=require("./controllers/userLogin");
 const showStudentAssignment = require('./controllers/showStudentAssignment');
 const showAssignmentsByAcc=require('./controllers/showAssignmentByaccepted');
+
 app.get("/login",loadlogin)
 
 app.get("/signup",loadsignup)
 app.post("/signup",signupController);
 app.post("/login",loginController);
-app.post("/weblogin",webLogin);
-app.post("/websignup",webSignup);
+app.post("/email/login",EmailChecker);
+app.post("/password/login",passwordChecker);
+app.post("/otp/login",optChecker);
+//app.post("/weblogin",webLogin); //this site route not use this for api testing.
+//app.post("/websignup",webSignup); //this site route not use this for api testing.
 app.get("/reqass",verifyWebUser,loadReqAssignments);
 app.post("/webreqass",uploads.single('files'),verifyWebUser,webReqAssignments)
 
@@ -76,4 +84,5 @@ app.get("/showAssignmentsByAcc",verifyUser,showAssignmentsByAcc);
 app.get("/showstudAssignments",showStudentAssignment);
 app.put("/sendAssSolvereq/:aid",verifyUser,sendAssSolvereq);
 app.delete("/delete/assignment/:did",deleteAssignment);
+
 

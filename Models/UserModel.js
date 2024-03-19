@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
     type:String,
     required:true,
   },
+  contact:{
+    type:String,
+    required:true,
+  },
   userstatus:{
     type:Number,
     required:true,
@@ -33,7 +37,17 @@ const userSchema = new mongoose.Schema({
   dateofRegister:{
     type:Date,
     required:true,
-    default:"-"
+    default:Date.now
+  },
+  location:{
+    longitude: {
+      type: Number,
+      required: true,
+  },
+  latitude: {
+      type: Number,
+      required: true,
+  }
   }
 });
 

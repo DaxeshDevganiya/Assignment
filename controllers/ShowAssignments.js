@@ -52,11 +52,11 @@
 
 
 
-    async function updateQueue(userId) {
-        try {
-            // Find and update the user's 'queue' field
-            await AssignAssignments.findOneAndUpdate({ queue: userId });
-        } catch (error) {
-            console.log("Error updating queue:", error);
-        }
-    }
+    // async function updateQueue(userId) {
+    //     try {
+    //         // Find and update the user's 'queue' field
+    //         await AssignAssignments.findOneAndUpdate({ queue: userId });
+    //     } catch (error) {
+    //         console.log("Error updating queue:", error);
+    //     }
+    // }
